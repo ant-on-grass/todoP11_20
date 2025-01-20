@@ -1,6 +1,7 @@
 package com.todop11_20.common.domain.entity;
 
 
+import com.todop11_20.auth.model.request.AuthRequestDto;
 import com.todop11_20.common.domain.enums.UserRole;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -45,4 +46,14 @@ public class User {
 //  private List<UserTodo> users = new ArrayList<>();
 
 
+  private User(String email, String password) {
+    this.email = email;
+    this.password = password;
+  }
+
+  public static User createUser(AuthRequestDto requestDto) {
+    return new User(requestDto.getEmail(),
+                    requestDto.getPassword()
+        );
+  }
 }
