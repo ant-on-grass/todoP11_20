@@ -1,6 +1,7 @@
 package com.todop11_20.common.domain.entity;
 
 
+import com.todop11_20.comment.model.request.CommentRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,5 +24,11 @@ public class Comment extends BaseEntity {
   @Column(name = "comment")
   private String comment;
 
+  private Comment(String comment) {
+    this.comment = comment;
+  }
 
+  public static Comment of(CommentRequestDto requestDto) {
+    return new Comment(requestDto.getComment());
+  }
 }

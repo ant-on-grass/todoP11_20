@@ -12,17 +12,17 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class) //todo 체크 1.
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @MappedSuperclass
 public abstract class BaseEntity {
 
   @CreatedDate
-  @Column(name = "created_at")
+  @Column(name = "created_at", nullable = false, updatable = false)
   protected LocalDateTime createdAt;
 
   @LastModifiedDate
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", nullable = false)
   protected LocalDateTime updatedAt;
 
 }

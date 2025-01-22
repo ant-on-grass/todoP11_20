@@ -1,6 +1,8 @@
 package com.todop11_20.common.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.todop11_20.auth.model.request.AuthRequestDto;
 import com.todop11_20.common.domain.enums.UserRole;
 import jakarta.persistence.CascadeType;
@@ -36,14 +38,19 @@ public class User {
 //  @Column(name = "nickname")
 //  private String nickName;
 
-//  @Column(name = "user_status")
-//  @Enumerated(EnumType.STRING)
-//  private UserRole userRole;
+  @Column(name = "user_status")
+  @Enumerated(EnumType.STRING)
+  private UserRole userRole;
 
   private boolean isDelete = Boolean.FALSE;
 
-//  @OneToMany(mappedBy = "user_id", cascade = CascadeType.REMOVE,orphanRemoval = true)
-//  private List<UserTodo> users = new ArrayList<>();
+  @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+  //@JsonManagedReference
+  //@JsonIgnore
+  private List<UserTodo> TodoUsers = new ArrayList<>();
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+  private List<UserSubTodo> SubTodoUsers = new ArrayList<>();
 
 
   private User(String email, String password) {

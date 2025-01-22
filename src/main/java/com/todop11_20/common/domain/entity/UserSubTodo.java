@@ -34,5 +34,12 @@ public class UserSubTodo {
   @Enumerated(EnumType.STRING)
   private UserTodoRole userTodoRole;
 
-
+  private UserSubTodo(User user, SubTodo subTodo, UserTodoRole userTodoRole) {
+    this.user = user;
+    this.subTodo = subTodo;
+    this.userTodoRole = userTodoRole;
+  }
+  public static UserSubTodo of(User user, SubTodo subTodo, UserTodoRole userTodoRole) {
+    return new UserSubTodo(user,subTodo,userTodoRole);
+  }
 }
