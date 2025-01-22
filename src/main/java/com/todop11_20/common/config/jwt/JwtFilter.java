@@ -60,20 +60,20 @@ public class JwtFilter implements Filter {
         return;
       }
 
-      UserRole userRole = UserRole.valueOf(claims.get("userRole", String.class));
+      //UserRole userRole = UserRole.valueOf(claims.get("userRole", String.class));
 
       request.setAttribute("id", Long.parseLong(claims.getSubject()));
       request.setAttribute("email", claims.get("email"));
-      request.setAttribute("userRole", claims.get("userRole"));
+      //request.setAttribute("userRole", claims.get("userRole"));
 
-      if (uri.contains("/admin")) {
-        if (!UserRole.ADMIN.equals(userRole)) {
-          response.sendError(401, "권한이 없습니다.");
-          return;
-        }
-        filterChain.doFilter(servletRequest, servletResponse);
-        return;
-      }
+//      if (uri.contains("/admin")) {
+//        if (!UserRole.ADMIN.equals(userRole)) {
+//          response.sendError(401, "권한이 없습니다.");
+//          return;
+//        }
+//        filterChain.doFilter(servletRequest, servletResponse);
+//        return;
+//      }
 
       filterChain.doFilter(servletRequest, servletResponse);
     } catch (SecurityException | MalformedJwtException e) {

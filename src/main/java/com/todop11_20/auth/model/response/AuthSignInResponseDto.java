@@ -10,11 +10,14 @@ public class AuthSignInResponseDto {
 
   private String message = "로그인에 성공했습니다.";
 
-  private AuthSignInResponseDto(String email) {
+  private String token;
+
+  private AuthSignInResponseDto(String email, String token) {
     this.email = email;
+    this.token = token;
   }
 
-  public static AuthSignInResponseDto createAuthSignInResponseDto(User user) {
-    return new AuthSignInResponseDto(user.getEmail());
+  public static AuthSignInResponseDto createAuthSignInResponseDto(User user,String token) {
+    return new AuthSignInResponseDto(user.getEmail(),token);
   }
 }

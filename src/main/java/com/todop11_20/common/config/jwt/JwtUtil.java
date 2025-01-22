@@ -23,24 +23,33 @@ public class JwtUtil {
   private static final long TOKEN_TIME = 60 * 60 * 1000L;
 
   @Value("${jwt.secret.key}")
-  private String secreKey;
+  private String secretKey;
   private Key key;
   private final SignatureAlgorithm signatureAlgorithm =SignatureAlgorithm.HS256;
 
   @PostConstruct
   public void init() {
-    byte[] bytes = Base64.getDecoder().decode(secreKey);
+    log.info("::: init start :::");
+    if (secretKey == null || secretKey.isEmpty()) {
+      log.info("::: init fail :::");
+      throw new IllegalStateException("JWT Secret Key is not initialized");
+    }
+    log.info("::: init ing :::");
+    byte[] bytes = Base64.getDecoder().decode(secretKey);
     key = Keys.hmacShaKeyFor(bytes);
+    log.info("::: init key value : {} :::",key);
+    log.info("::: init end :::");
   }
 
-  public String createToken(Long userId, String email, UserRole userRole) {
+  public String createToken(Long userId, String email) { //, UserRole userRole)
     Date date = new Date();
+    log.info("::: key value : {}",key);
 
     return BEARER_PREFIX +
         Jwts.builder()
             .setSubject(String.valueOf(userId))
             .claim("email",email)
-            .claim("userRole",userRole)
+            //.claim("userRole",userRole)
             .setExpiration(new Date(date.getTime()+ TOKEN_TIME))
             .setIssuedAt(date)
             .signWith(key, signatureAlgorithm)

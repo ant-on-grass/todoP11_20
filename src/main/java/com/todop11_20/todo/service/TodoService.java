@@ -1,6 +1,7 @@
 package com.todop11_20.todo.service;
 
 import com.todop11_20.auth.repository.UserRepository;
+import com.todop11_20.common.aop.LoggingAop;
 import com.todop11_20.common.domain.entity.Todo;
 import com.todop11_20.common.domain.entity.User;
 import com.todop11_20.common.domain.enums.UserTodoRole;
@@ -33,6 +34,7 @@ public class TodoService {
     return TodoReponseDto.of(todo);
   }
 
+@LoggingAop
 @Transactional
   public Page<TodoFindReponseDto> findAll(Pageable pageable) {
   Page<TodoFindReponseDto> pageTodoFindReponseDto = todoRepository.searchAll(pageable);

@@ -2,6 +2,7 @@ package com.todop11_20.auth.controller;
 
 
 import com.todop11_20.auth.model.request.AuthRequestDto;
+import com.todop11_20.auth.model.response.AuthSignInResponseDto;
 import com.todop11_20.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,10 @@ public class AuthController {
   @PostMapping("/signin")
   public ResponseEntity<String> signInApi(@RequestBody AuthRequestDto requestDto) {
 
-    return ResponseEntity.ok().body(authService.signIn(requestDto).getMessage());
+    AuthSignInResponseDto authSignInResponseDto = authService.signIn(requestDto);
+
+    return ResponseEntity.ok().header("Authorization",authSignInResponseDto.getToken())
+        .body(authSignInResponseDto.getMessage());
   }
 
 }
