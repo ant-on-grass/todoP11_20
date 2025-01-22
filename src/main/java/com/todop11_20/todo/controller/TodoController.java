@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,25 +43,12 @@ public class TodoController {
     return ResponseEntity.ok().body(todoService.findAll(pageable));
   }
 
-//  @GetMapping("/{todo_id}")
-//  public ResponseEntity<List<TodoReponseDto>> findByIdApi(Pageable pageable,
-//      @PathVariable("todo_id") Long todoId ) {
-//
-//    return ResponseEntity.ok().body(todoService.findById(todoId,pageable);
-//  }
-//
-//  @PatchMapping("/{todo_id}")
-//  public ResponseEntity<String> patchTodoApi(@RequestBody TodoRequestDto requestDto,
-//                                            @PathVariable("todo_id") Long todoID
-//      ) {
-//
-//    return ResponseEntity.ok().body(todoService.patchTodo(requestDto,todoID).getPatchMessage());
-//  }
-//
-//  @DeleteMapping("/{todo_id}")
-//  public ResponseEntity<String> deleteTodoApi(@PathVariable("todo_id") Long todoID) {
-//
-//    return ResponseEntity.ok().body(todoService.deleteTodo(todoID).getDeleteMessage());
-//  }
+  @DeleteMapping("/{todo_id}")
+  public ResponseEntity<String> deleteApi(@PathVariable("todo_id") Long todoId) {
+
+    todoService.delete(todoId);
+
+    return ResponseEntity.ok().body("삭제 성공");
+  }
 
 }

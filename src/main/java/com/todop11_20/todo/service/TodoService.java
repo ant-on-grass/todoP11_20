@@ -44,9 +44,10 @@ public class TodoService {
   return pageTodoFindReponseDto;
   }
 
-//  public Page<TodoReponseDto> findById(Long todoId,Pageable pageable) {
-//    todoRepository.findBytodoi
-//
-//
-//  }
+  public void delete(Long todoId) {
+    Todo todo = todoRepository.findByIdOrElseThrow(todoId);
+
+    todoRepository.delete(todo);
+  }
+
 }
