@@ -1,8 +1,5 @@
 package com.todop11_20.common.domain.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.todop11_20.common.domain.enums.UserTodoRole;
 import com.todop11_20.todo.model.request.TodoRequestDto;
 import jakarta.persistence.CascadeType;

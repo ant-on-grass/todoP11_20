@@ -5,12 +5,9 @@ import com.todop11_20.common.domain.entity.Todo;
 import com.todop11_20.common.domain.entity.User;
 import com.todop11_20.common.domain.enums.UserTodoRole;
 import com.todop11_20.todo.model.response.TodoFindReponseDto;
-import com.todop11_20.todo.repository.TodoQueryRepository;
-import com.todop11_20.usertodo.model.request.CreateUserTodoRequestDto;
 import com.todop11_20.todo.model.request.TodoRequestDto;
 import com.todop11_20.todo.model.response.TodoReponseDto;
 import com.todop11_20.todo.repository.TodoRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -40,7 +37,6 @@ public class TodoService {
   public Page<TodoFindReponseDto> findAll(Pageable pageable) {
   Page<TodoFindReponseDto> pageTodoFindReponseDto = todoRepository.searchAll(pageable);
 
-  //Page<TodoFindReponseDto> pageTodoFindReponseDto = pageAll.map(TodoFindReponseDto::of);
   return pageTodoFindReponseDto;
   }
 
