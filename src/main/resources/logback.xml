@@ -1,0 +1,82 @@
+<configuration>
+
+  <timestamp key="ToDay" datePattern="yyyyMMdd" />
+
+  <!-- 콘솔 로깅 설정 -->
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>NEUTRAL</onMismatch>
+    </filter>
+
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>INFO</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- 파일 로깅 설정 -->
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>NEUTRAL</onMismatch>
+    </filter>
+
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>INFO</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+
+    <file>./logs/${ToDay}_basic_log.log</file> <!-- 로그 파일 이름 -->
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>
+        ./logs/${ToDay}_basic_log_%i.log
+      </fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>1</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+<!--  aop 로깅 파일-->
+  <appender name="AOP_FILE" class="ch.qos.logback.core.FileAppender">
+
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>WARN</level>
+      <onMatch>DENY</onMatch>
+      <onMismatch>ACCEPT</onMismatch>
+    </filter>
+
+    <file>./logs/${ToDay}_AOP_log.log</file> <!-- 로그 파일 이름 -->
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>
+        ./logs/${ToDay}_AOP_log_%i.log
+      </fileNamePattern>
+      <maxFileSize>2MB</maxFileSize>
+      <maxHistory>1</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="com.todop11_20.common.aop" level="INFO" additivity="false">
+    <appender-ref ref="AOP_FILE" />
+  </logger>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE" /> <!-- 콘솔 출력 -->
+    <appender-ref ref="FILE" />    <!-- 파일에 기록 -->
+  </root>
+</configuration>

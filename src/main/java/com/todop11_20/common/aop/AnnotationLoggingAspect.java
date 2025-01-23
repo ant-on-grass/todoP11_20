@@ -6,12 +6,16 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Aspect
 @Component
 public class AnnotationLoggingAspect {
+
+  private static final Logger logger= LoggerFactory.getLogger(AnnotationLoggingAspect.class);
 
   @Pointcut("@annotation(com.todop11_20.common.aop.LoggingAop)")
   private void loggingAopAnnotation() {}
@@ -23,12 +27,14 @@ public class AnnotationLoggingAspect {
     try {
       Object result = joinPoint.proceed();
       return result;
-    } catch (Throwable e) {
-      throw new RuntimeException("횡단 관심사 실행 중 오류 발생 ");
+    }  catch (Throwable e) {
+      logger.error("::: aop error :::");
+      throw new RuntimeException("test");
     } finally {
       long endTime = System.currentTimeMillis();
       long excutionTime = endTime - startTime;
-      log.info("::: ExcutionTime : {}ms",excutionTime);
+      logger.info("::: ExcutionTime : {}ms",excutionTime);
+      return null;
     }
 
   }

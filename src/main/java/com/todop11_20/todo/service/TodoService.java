@@ -43,7 +43,11 @@ public class TodoService {
   }
 
   public void delete(Long todoId) {
+    long startTime = System.currentTimeMillis();
     Todo todo = todoRepository.findByIdOrElseThrow(todoId);
+    long endTime = System.currentTimeMillis();
+    log.debug("::: ex time : {}ms :::",startTime-endTime);
+
 
     todoRepository.delete(todo);
   }
