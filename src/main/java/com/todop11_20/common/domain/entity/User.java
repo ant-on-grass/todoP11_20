@@ -52,8 +52,14 @@ public class User {
   @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
   private List<UserSubTodo> SubTodoUsers = new ArrayList<>();
 
+  public User(String email, String password, UserRole userRole, boolean isDelete) {
+    this.email = email;
+    this.password = password;
+    this.userRole = userRole;
+    this.isDelete = isDelete;
+  }
 
-  private User(String email, String password) {
+  public User(String email, String password) {
     this.email = email;
     this.password = password;
   }
@@ -63,4 +69,6 @@ public class User {
                     requestDto.getPassword()
         );
   }
+
+
 }

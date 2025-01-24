@@ -44,6 +44,10 @@ dependencies {
     compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+
+    implementation ('com.github.javafaker:javafaker:1.0.2') { exclude module: 'snakeyaml'}
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '2.2'
+
 }
 
 tasks.named('test') {
