@@ -1,13 +1,13 @@
 package com.todop11_20.common.domain.enums;
 
-import java.lang.reflect.Array;
+import com.todop11_20.common.domain.EnumStatusInterface;
 import java.util.Arrays;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-public enum UserRole {
+public enum UserRole implements EnumStatusInterface {
 
-  ADMIN("admin"),USER("user");
+  ADMIN("ADMIN"),USER("USER");
 
   private final String role;
 
@@ -20,5 +20,10 @@ public enum UserRole {
         .filter(r -> r.name().equalsIgnoreCase(userRole))
         .findFirst()
         .orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST));
+  }
+
+  @Override
+  public String getCode() {
+    return role;
   }
 }

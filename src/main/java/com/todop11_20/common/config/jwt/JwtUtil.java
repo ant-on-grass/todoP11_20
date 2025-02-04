@@ -1,6 +1,5 @@
 package com.todop11_20.common.config.jwt;
 
-import com.todop11_20.common.domain.enums.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

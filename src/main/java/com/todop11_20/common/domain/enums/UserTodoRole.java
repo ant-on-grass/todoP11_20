@@ -1,14 +1,15 @@
 package com.todop11_20.common.domain.enums;
 
+import com.todop11_20.common.domain.EnumStatusInterface;
 import java.util.Arrays;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-public enum UserTodoRole {
+public enum UserTodoRole implements EnumStatusInterface {
 
-  PARTICIPANT("participant"),
-  MANAGER("manager");
+  PARTICIPANT("PARTICIPANT"),
+  MANAGER("MANAGER");
 
   private final String role;
 
@@ -24,4 +25,8 @@ public enum UserTodoRole {
   }
 
 
+  @Override
+  public String getCode() {
+    return role;
+  }
 }
