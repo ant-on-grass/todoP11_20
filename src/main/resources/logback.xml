@@ -1,0 +1,87 @@
+<configuration>
+
+  <timestamp key="ToDay" datePattern="yyyyMMdd" />  <!-- 밑에서 사용할 시간 관련 코드 -->
+
+  <!-- 콘솔 로깅 설정 -->
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>NEUTRAL</onMismatch>
+    </filter>
+
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>INFO</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+
+    <encoder>
+<!-- %d{yyyy-MM-dd HH:mm:ss} , %-5level , - %msg , %n 등은 로그가 어떤 것이 찍힐지 설정 // 그외에도 thread , 무언가? 있지만 본인은 생략 -->
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- 파일 로깅 설정 -->
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>NEUTRAL</onMismatch>
+    </filter>
+
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>INFO</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+
+    <file>./logs/${ToDay}_basic_log.log</file> <!-- 로그 파일 이름 -->
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>
+        ./logs/${ToDay}_basic_log_%i.log
+      </fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>1</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+<!--  aop 로거 파일-->
+  <appender name="AOP_FILE" class="ch.qos.logback.core.FileAppender"> <!-- name="AOP_FILE" 설정 값을 적용시킬 때, 명시적 이름 -->
+    <!-- ps. 필터 중,  ThresholdFilter 는 그보다 상위 혹은 자신의 레벨만 허용 = > 그래서 onMatch , onMismatch 태그를 사용하지 않음 -->
+    <filter class="ch.qos.logback.classic.filter.LevelFilter"> <!-- LevelFilter 필터의 방식 중 , 일치하는 것만 -->
+      <level>WARN</level>  <!-- LevelFilter 에서 레벨 설정 -->
+      <onMatch>DENY</onMatch>   <!-- DENY == 무시 //  ACCEPT == 허용  // NEUTRAL == 다음 필터로 넘김 -->
+      <onMismatch>ACCEPT</onMismatch>
+    </filter>
+
+    <file>./logs/${ToDay}_AOP_log.log</file> <!-- 로거 파일 이름 -->
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"> <!-- 로거 파일 설정 -->
+      <fileNamePattern> <!-- 로거 파일 생성위치 -->
+        ./logs/${ToDay}_AOP_log_%i.log <!-- _%i == 생성의 의미 // 뒤에 .log == 확장자 -->
+      </fileNamePattern>
+      <maxFileSize>2MB</maxFileSize>  <!-- <maxFileSize> 파일의 크기 설정 -->
+      <maxHistory>1</maxHistory>  <!-- <maxHistory> 언제까지 해당 파일을 살려둘지 - ex 1 == 하루 -->
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="com.todop11_20.common.aop" level="INFO" additivity="false">
+    <!-- additivity="false" 해당 부분에만 적용-->
+    <!-- additivity="true" 상위에도 적용 - > root 로 -->
+    <!-- name="com.todop11_20.common.aop" 로거가 있는 패키지 명 -->
+    <!-- level="INFO" level INFO 보다 위거나 같거나 부터 -->
+    <appender-ref ref="AOP_FILE" /> <!-- aop 파일에 기록 -->
+  </logger>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE" /> <!-- 콘솔 출력 -->
+    <appender-ref ref="FILE" />    <!-- 파일에 기록 -->
+  </root>
+</configuration>
